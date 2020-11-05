@@ -1,0 +1,18 @@
+@import '../../assets/scss/colors.scss';
+
+.bg-header {
+    background-color: $color_primary;
+}
+
+.tage-header {
+    color: $color_secondary;
+}
+
+.navbar-brand {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.navbar-icons {
+    font-size: 2rem;
+}

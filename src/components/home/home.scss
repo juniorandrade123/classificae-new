@@ -1,0 +1,18 @@
+@import '../../assets/scss/colors.scss';
+
+
+.btn-view {
+    background-color: $color_secondary;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;    
+}
+
+.card-img-top {    
+    height: 150px;
+    object-fit: cover;
+}
+
+.alert-info {
+    font-size: 1.5rem;
+}
