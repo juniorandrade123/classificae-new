@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../api';
-import './home.scss';
+import './company.scss';
+import { Redirect } from 'react-router';
 
-const Home: React.FC<{
+
+const Company: React.FC<{
     search: string
 }> = ({search}) => {
 
@@ -28,6 +30,11 @@ const Home: React.FC<{
 
             setLoading(false);
         });
+    }
+
+    const goToView = (item: any) => {
+        localStorage.setItem('company', JSON.stringify(item));
+        window.location.href = 'view';
     }
 
     const renderLoading = () => {
@@ -68,7 +75,7 @@ const Home: React.FC<{
                                 <h5 className="card-title">{item.name}</h5>
                                 <p className="card-text">{item.description}</p>
                             </div>
-                            <div className="card-footer btn-view">
+                            <div className="card-footer btn-view" onClick={() => goToView(item)}>
                                 Visualizar
                             </div>
                         </div>
@@ -81,4 +88,4 @@ const Home: React.FC<{
     );
 };
 
-export default Home;
+export default Company;
