@@ -69,7 +69,7 @@ const Company: React.FC<{
             {
                 listCompanys.map((item: any, i: number) => (
                     <div className="col-lg-3 col-md-6 mb-4" key={i}>
-                        <div className="card h-100">
+                        <div className="card h-100 card-company">
                             <img className="card-img-top" src={item.image_logo} alt="" />
                             <div className="card-body">
                                 <h5 className="card-title">{item.name}</h5>
