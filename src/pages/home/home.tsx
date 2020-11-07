@@ -19,7 +19,7 @@ const Home: React.FC = () => {
             <header className="jumbotron my-4 mt-5">
                 <h1 className="display-3 text-center">
                     Encontre aqui empresas que irão ajudar você!
-        </h1>
+                </h1>
 
                 <div className="col-7 ml-auto mr-auto mb-0 mt-5">
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -36,7 +36,8 @@ const Home: React.FC = () => {
             </div>
             <footer className="py-5 bg-dark">
                 <div className="container">
-                    <p className="m-0 text-center text-white">&copy; Classificae 2020</p>
+                    <p className="m-0 text-center text-white">&copy; Desenvolvido por Classificae. Todos os direitos reservados.</p>
+                    <p className="m-0 text-center text-white">É uma plataforma digital que auxilia na divulgação de Empresas e seus segmentos.</p>
                 </div>
             </footer>
         </div>

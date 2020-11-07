@@ -1,3 +1,35 @@
+@import '../../assets/scss/colors.scss';
+
 .view {
     margin-top: 7em !important;
+}
+
+.view-address {
+    margin-top: 5em !important;
+}
+
+.social_client {
+    color: $color_primary;
+}
+
+.awssld__content > img {
+    object-fit: contain !important;
+}
+
+.card-view {
+    box-shadow: 0px 0px 20px -12px rgba(0,0,0,0.75);
+    border: 0;
+}
+
+@media only screen and (max-width: 1024px) {
+    .view {
+        margin-top: 9em !important;
+    }
+
+    .view-img {
+        margin-top: 3em;
+    }
+    .view-address {
+        margin-top: 1em !important;
+    }
 }
