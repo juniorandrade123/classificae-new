@@ -20,13 +20,15 @@ const Company: React.FC<{
         setListCompanys([]);
         api.get('listCompanys')
         .then((node: any) => {
-            setListCompanys(node.data.company);
+            
             if (search !== '') {                
-                setListCompanys(listCompanys.filter((a: any) => a.name.toUpperCase().includes(search.toUpperCase())
+                setListCompanys(node.data.company.filter((a: any) => a.name.toUpperCase().includes(search.toUpperCase())
                 || a.description.toUpperCase().includes(search.toUpperCase())
                 || a.keywords.toUpperCase().includes(search.toUpperCase())
                 || a.segment.toUpperCase().includes(search.toUpperCase())));
-              }
+            } else {
+                setListCompanys(node.data.company);
+            }
 
             setLoading(false);
         });
@@ -38,13 +40,7 @@ const Company: React.FC<{
     }
 
     const renderLoading = () => {
-        return <div>
-            <div className="d-flex justify-content-center">
-                <div className="spinner-border" role="status">
-                    <span className="sr-only">Carregando...</span>
-                </div>
-            </div>
-        </div>
+        return <div className="lds-ripple"><div></div><div></div></div>
     }
 
     const renderNotFound = () => {

@@ -5,7 +5,7 @@
 }
 
 .tage-header {
-    color: white;
+    color: $color_secondary;
 }
 
 .navbar-brand {
@@ -15,6 +15,18 @@
 
 .navbar-icons {
     font-size: 2rem;
+}
+
+.back {
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.back:hover {
+    text-decoration: none;
+    color: white;
 }
 
 @media only screen and (max-width: 1024px) {
@@ -36,5 +48,10 @@
     }
     .jumbotron {
         margin-top: 5.5em !important;
+    }
+    .back {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 1em;
     }
 }

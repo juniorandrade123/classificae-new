@@ -4,8 +4,6 @@ import ReactTooltip from 'react-tooltip';
 import AwesomeSlider from 'react-awesome-slider';
 
 import 'react-awesome-slider/dist/styles.css';
-import 'react-awesome-slider/dist/custom-animations/cube-animation.css';
-
 import './view.scss';
 
 const View: React.FC = () => {
@@ -14,11 +12,36 @@ const View: React.FC = () => {
 
     useEffect(() => {
         const local = localStorage.getItem('company');
-        if (local !== undefined && local !== null) {
-            setCompany(JSON.parse(local));
+        
+        if (local !== undefined && local !== null) {    
+            let convertJson = JSON.parse(local);                 
+
+            let images:any[] = [];
+            Object.keys(convertJson.image_galeria).map((item: any, i) => {
+                console.log(i);
+                images.push(convertJson.image_galeria[item]);
+            });
+
+            convertJson.image_galeria = images;
+            convertJson.image_galeria.push({base64: convertJson.image_logo, id: 0});
+            
+            var sortedArray: string[] = convertJson.image_galeria.sort((n1: any,n2: any) => {
+                if (n1.id > n2.id) {
+                    return 1;
+                }
+            
+                if (n1.id < n2.id) {
+                    return -1;
+                }
+            
+                return 0;
+            });
+
+            convertJson.image_galeria = sortedArray;
+
+            setCompany(convertJson);
         }
 
-        console.log(company);
     }, [])
 
     const renderPage = () => {
@@ -28,10 +51,10 @@ const View: React.FC = () => {
                 <div className="container mt-5">                                    
                     <div className="row align-items-center my-5 view">                                        
                         <div className="col-lg-7">
-                            <AwesomeSlider animation="cubeAnimation">
+                            <AwesomeSlider>
                                 {
-                                    Object.keys(company.image_galeria).map((item: any, i) => (
-                                        <div key={i} data-src={company.image_galeria[item].base64} />             
+                                    company.image_galeria.map((item: { base64: any; }, index: any) => (
+                                        <div key={index} data-src={item.base64} />             
                                     ))
                                 }
                             </AwesomeSlider>
@@ -69,9 +92,15 @@ const View: React.FC = () => {
                             <div className="card-body">
                                 <h3 className="card-title">Contato</h3>
                                 <p className="card-text">
-                                    <b>Telefone:</b> {'(' + company.contact.tel.substr(0, 2) + ') ' + company.contact.tel.substr(2, 4) + '-' + company.contact.tel.substr(6,4)}<br></br>
-                                    <b>Celular:</b> {'(' + company.contact.cel.substr(0, 2) + ') ' + company.contact.cel.substr(2, 5) + '-' + company.contact.cel.substr(6,4)}<br></br>
-                                    <b>E-mail:</b> {company?.contact?.email === '' ? 'contato@classificae.com.br' : company?.contact?.email}
+                                    <span style={{display: company.contact.tel !== '' ? '' : 'none'}}>
+                                        <b>Telefone:</b> {'(' + company.contact.tel.substr(0, 2) + ') ' + company.contact.tel.substr(2, 4) + '-' + company.contact.tel.substr(6,4)}<br></br>
+                                    </span>
+                                    <span style={{display: company.contact.cel !== '' ? '' : 'none'}}>
+                                        <b>Celular:</b> {'(' + company.contact.cel.substr(0, 2) + ') ' + company.contact.cel.substr(2, 5) + '-' + company.contact.cel.substr(6,4)}<br></br>
+                                    </span>
+                                    <span style={{display: company.contact.email !== '' ? '' : 'none'}}>
+                                        <b>E-mail:</b> {company?.contact?.email === '' ? 'contato@classificae.com.br' : company?.contact?.email}
+                                    </span>
                                 </p>
                             </div>
                             </div>
