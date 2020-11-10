@@ -8,15 +8,12 @@ import View from './pages/view/view';
 function App() {
 
   return (
-    <div>
-      <Header />   
       <BrowserRouter>
         <Switch>
           <Route path="/" exact={true} component={Home} />
           <Route path="/view" component={View} />
         </Switch>
     </BrowserRouter>
-    </div>
   );
 }
 

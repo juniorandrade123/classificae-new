@@ -3,6 +3,7 @@ import './home.scss';
 import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from 'react';
 import Company from '../../components/company/company';
+import Header from '../../components/header/header';
 
 const Home: React.FC = () => {
 
@@ -11,12 +12,12 @@ const Home: React.FC = () => {
 
     const onSubmit = (data: { search: React.SetStateAction<string>; }) => {
         setSearch(data.search)
-        console.log(search);
     };
 
     const renderPage = () => {
-        return <div>
-            <header className="jumbotron my-4 mt-5">
+        return <div>  
+            <Header />            
+            <header className="jumbotron jumbotron-home my-4 mt-5">
                 <h1 className="display-3 text-center">
                     Encontre aqui empresas que irão ajudar você!
                 </h1>

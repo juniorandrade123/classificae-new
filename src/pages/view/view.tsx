@@ -5,6 +5,7 @@ import AwesomeSlider from 'react-awesome-slider';
 
 import 'react-awesome-slider/dist/styles.css';
 import './view.scss';
+import Header from '../../components/header/header';
 
 const View: React.FC = () => {
 
@@ -46,7 +47,11 @@ const View: React.FC = () => {
 
     const renderPage = () => {
         if (company !== null && company !== undefined)
-            return <div className="mt-5">
+            return <div>
+                <Header title={company['name']} 
+                    facebook={company.information.redes.facebook} 
+                    instagram={company.information.redes.instagran} />
+                <div className="mt-5">
                 <ReactTooltip place={'bottom'} />
                 <div className="container mt-5">                                    
                     <div className="row align-items-center my-5 view">                                        
@@ -60,33 +65,12 @@ const View: React.FC = () => {
                             </AwesomeSlider>
                         </div>
                         <div className="col-lg-5 view-img">
-                            <h1 className="font-weight-bold">{company['name']}</h1>                        
+                            <h1>Conheça a <span className="font-weight-bold">{company['name']}</span></h1>                        
                             <h6>{company['keywords']}</h6>
-                            <h6>{company['description_all']}</h6>                                                                       
-                            <div className="row">
-                                <div className="col-2 p-0" style={{display: company.information.redes.facebook === '' ? 'none' : ''}}>
-                                    <a className="nav-link navbar-icons social_client" href={company.information.redes.facebook} target="blank">
-                                        <i data-tip="Siga-nos no Facebook" className="fa fa-facebook"></i>
-                                    </a>
-                                </div>
-                                <div className="col-2 p-0" style={{display: company.information.redes.instagran === '' ? 'none' : ''}}>
-                                    <a className="nav-link navbar-icons social_client" href={company.information.redes.instagran} target="blank">
-                                        <i data-tip="Siga-nos no Instagram" className="fa fa-instagram"></i>
-                                    </a>
-                                </div>
-                            </div>
+                            <h6>{company['description_all']}</h6>
                         </div>
-                    </div>
-                    <div className="card text-white bg-secondary my-5 py-4 text-center view-address">
-                        <div className="card-body">
-                            <div className="text-white m-0">
-                                <div className="row text-center">
-                                    <h3 className="col-12 text-center">{company?.address?.description}</h3> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
+                    </div>                    
+                    <div className="row view-address">
                         <div className="col-md-4 mb-5">
                             <div className="card-view card h-100">
                             <div className="card-body">
@@ -133,6 +117,10 @@ const View: React.FC = () => {
                             </div>
                         </div>
                     </div>
+                    <div className="col-12 p-0">
+                    <iframe className="col-12 p-0 mb-5" src={company.address.map} width="800" height="600" 
+                        frameBorder={0} allowFullScreen={true} aria-hidden="false" tabIndex={0}></iframe>
+                    </div>
                 </div>
                 <footer className="py-5 bg-dark">
                     <div className="container">
@@ -140,13 +128,14 @@ const View: React.FC = () => {
                     <p className="m-0 text-center text-white">É uma plataforma digital que auxilia na divulgação de Empresas e seus segmentos.</p>
                     </div>
                 </footer>
+            </div>
             </div>;
     
         return <div></div>    
     }
 
-    return (
-        renderPage()
+    return (                    
+            renderPage()        
     );
 };
 

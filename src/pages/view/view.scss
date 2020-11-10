@@ -21,6 +21,12 @@
     border: 0;
 }
 
+.jumbotron-view {
+    background-image: url('../../assets/img/header_view.jpg');
+    color: white;
+    font-weight: 900;
+}
+
 @media only screen and (max-width: 1024px) {
     .view {
         margin-top: 11em !important;

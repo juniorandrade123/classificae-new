@@ -5,39 +5,62 @@ import ReactTooltip from 'react-tooltip';
 
 
 
-const Header: React.FC = () => {    
+const Header: React.FC<
+{
+    title?: string,
+    facebook?: string,
+    instagram?:string,
+    whatsapp?:string
+}> = ({
+        title = null,
+        facebook = null,
+        instagram = null,
+        whatsapp = null
+    }) => {    
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-header fixed-top">
-            <ReactTooltip place={'bottom'} />
-            <a href="/" className="back" style={{display: window.location.pathname === '/view' ? '' : 'none'}}>
-                <span>
-                    <i className="fa fa-arrow-left mr-2" aria-hidden="true"></i>
-                    voltar para inicio
-                </span>
-            </a>
+            <ReactTooltip place={'bottom'} />            
             <div className="container">
-                <a className="navbar-brand" href="/">
-                    <span>Classifica</span><span className="tage-header">e</span>
-                </a>
-                <div className="collapse navbar-collapse" id="navbarResponsive">
+                <div className="row col-12">
+                    <div className="col-3 mt-3" style={{display: window.location.pathname === '/view' ? '' : 'none'}}>
+                    <a href="/" className="back">
+                        <span>
+                            <i className="fa fa-arrow-left mr-2" aria-hidden="true"></i>
+                            voltar para inicio
+                        </span>
+                    </a>
+                    </div>
+                    <div className={window.location.pathname === '/view' ? 'col-7 text-center' : 'col-6'}>
+                        <a style={{display: title === null ? '' : 'none'}} className="navbar-brand" href="/">
+                            <span>Classifica</span><span className="tage-header">e</span>
+                        </a>
+                        <a style={{display: title === null ? 'none' : ''}} className="navbar-brand" href="/">
+                            <span>{title}</span>
+                        </a>
+                    </div>
+                    
+                    <div className={window.location.pathname === '/view' ? 'col-2' : 'col-6'}>
+                        <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item active">
-                            <a className="nav-link navbar-icons" href="https://www.facebook.com/classificae/" target="blank">
+                            <a className="nav-link navbar-icons" href={facebook === null ? 'https://www.facebook.com/classificae/' : facebook} target="blank">
                                 <i data-tip="Facebook" className="fa fa-facebook"></i>
                             </a>
                         </li>
                         <li className="nav-item active">
-                            <a className="nav-link navbar-icons" href="https://www.instagram.com/classificae/" target="blank">
+                            <a className="nav-link navbar-icons" href={instagram === null ? 'https://www.instagram.com/classificae/' : instagram} target="blank">
                                 <i data-tip="Instagram" className="fa fa-instagram"></i>
                             </a>
                         </li>
                         <li className="nav-item active">
-                            <a className="nav-link navbar-icons" href="https://wa.me/message/PYKGLF2ELGGDG1" target="blank">
+                            <a className="nav-link navbar-icons" href={whatsapp === null ? 'https://wa.me/message/PYKGLF2ELGGDG1' : whatsapp} target="blank">
                                 <i data-tip="Whatsapp" className="fa fa-whatsapp"></i>
                             </a>
                         </li>
                     </ul>
+                </div>
+                    </div>
                 </div>
             </div>
         </nav>
