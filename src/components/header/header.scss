@@ -34,6 +34,15 @@
     color: white;
 }
 
+.navbar-brand-p {
+    word-break: break-all;
+    font-size: 1.5rem;
+    padding: 0;
+    color: white;
+    font-weight: bold;
+    margin-top: 0.5em;
+}
+
 @media only screen and (max-width: 1024px) {
     .navbar-brand {
         width: 100%;
@@ -64,18 +73,18 @@
         font-weight: 500;
     }
 
-    .nav-name {
-        flex: 0 0 100%;
-        max-width: 100%;
-        text-align: center;
-    }
-
     .navbar-brand-p {
         word-break: break-all;
         font-size: 1.5rem;
         padding: 0;
         color: white;
         font-weight: bold;
+    }
+
+    .nav-name {
+        flex: 0 0 100%;
+        max-width: 100%;
+        text-align: center;
     }
 
     .nav-icons {
