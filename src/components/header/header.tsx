@@ -22,25 +22,25 @@ const Header: React.FC<
         <nav className="navbar navbar-expand-lg navbar-dark bg-header fixed-top">
             <ReactTooltip place={'bottom'} />            
             <div className="container">
-                <div className="row col-12">
-                    <div className="col-3 mt-3" style={{display: window.location.pathname === '/view' ? '' : 'none'}}>
-                    <a href="/" className="back">
+                <div className="row col-12 ml-auto mr-auto">
+                    <div className="col-3 mt-3 back" style={{display: window.location.pathname === '/view' ? '' : 'none'}}>
+                    <a href="/">
                         <span>
                             <i className="fa fa-arrow-left mr-2" aria-hidden="true"></i>
                             voltar para inicio
                         </span>
                     </a>
                     </div>
-                    <div className={window.location.pathname === '/view' ? 'col-7 text-center' : 'col-6'}>
+                    <div className={window.location.pathname === '/view' ? 'col-7 text-center nav-name' : 'col-6 nav-name'}>
                         <a style={{display: title === null ? '' : 'none'}} className="navbar-brand" href="/">
                             <span>Classifica</span><span className="tage-header">e</span>
                         </a>
-                        <a style={{display: title === null ? 'none' : ''}} className="navbar-brand" href="/">
+                        <p style={{display: title === null ? 'none' : ''}} className="navbar-brand-p">
                             <span>{title}</span>
-                        </a>
+                        </p>
                     </div>
                     
-                    <div className={window.location.pathname === '/view' ? 'col-2' : 'col-6'}>
+                    <div className={window.location.pathname === '/view' ? 'col-2 nav-icons' : 'col-6 nav-icons'}>
                         <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item active">

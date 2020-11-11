@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../api';
 import './company.scss';
-import { Redirect } from 'react-router';
 
 
 const Company: React.FC<{

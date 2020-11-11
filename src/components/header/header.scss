@@ -24,6 +24,11 @@
     font-size: 1.1rem;
 }
 
+.back a {
+    text-decoration: none;
+    color: white;
+}
+
 .back:hover {
     text-decoration: none;
     color: white;
@@ -53,5 +58,29 @@
         margin-left: auto;
         margin-right: auto;
         margin-bottom: 1em;
+        flex: 0 0 100%;
+        max-width: 100%;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    .nav-name {
+        flex: 0 0 100%;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .navbar-brand-p {
+        word-break: break-all;
+        font-size: 1.5rem;
+        padding: 0;
+        color: white;
+        font-weight: bold;
+    }
+
+    .nav-icons {
+        flex: 0 0 100%;
+        max-width: 100%;
+        text-align: center;
     }
 }
