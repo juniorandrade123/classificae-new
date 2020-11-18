@@ -20,7 +20,7 @@ const Login: React.FC<
             api.post('login/', {'email': data.email, 'password': data.password})
             .then((node: any) => {
                 sessionStorage.setItem('user-info', JSON.stringify(node.data));
-                location.reload();
+                window.location.reload();
             });
         }
 
