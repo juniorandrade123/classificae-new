@@ -51,7 +51,7 @@ const Company: React.FC<{
     }
 
     return (
-        <div className="row text-center">
+        <div className="row text-center">                
 
                 <div className="col-12 mb-5 mt-4" style={{ display: !loading ? 'none' : '' }}>
                     {renderLoading()}

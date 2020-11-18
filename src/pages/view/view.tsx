@@ -6,10 +6,12 @@ import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
 import './view.scss';
 import Header from '../../components/header/header';
+import Login from '../../components/login/login';
 
 const View: React.FC = () => {
 
     const [company, setCompany] = useState<any | null>(null);
+    const [showLogin, setShowLogin] = useState(false);
 
     useEffect(() => {
         const local = localStorage.getItem('company');
@@ -48,9 +50,14 @@ const View: React.FC = () => {
     const renderPage = () => {
         if (company !== null && company !== undefined)
             return <div>
+
                 <Header title={company['name']} 
                     facebook={company.information.redes.facebook} 
-                    instagram={company.information.redes.instagran} />
+                    instagram={company.information.redes.instagran}
+                    login={(change: boolean) => setShowLogin(change)} />
+
+                <Login showLogin={showLogin} changeLogin={(change: boolean) => setShowLogin(change)} />
+
                 <div className="mt-5">
                 <ReactTooltip place={'bottom'} />
                 <div className="container mt-5">                                    

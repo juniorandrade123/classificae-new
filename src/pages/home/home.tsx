@@ -4,11 +4,14 @@ import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from 'react';
 import Company from '../../components/company/company';
 import Header from '../../components/header/header';
+import Login from '../../components/login/login';
 
 const Home: React.FC = () => {
 
     const { register, handleSubmit, watch, errors } = useForm();
     const [search, setSearch] = useState('');
+    const [showLogin, setShowLogin] = useState(false);
+
 
     const onSubmit = (data: { search: React.SetStateAction<string>; }) => {
         setSearch(data.search)
@@ -16,7 +19,10 @@ const Home: React.FC = () => {
 
     const renderPage = () => {
         return <div>  
-            <Header />            
+            <Header login={(change: boolean) => setShowLogin(change)} />      
+            
+            <Login showLogin={showLogin} changeLogin={(change: boolean) => setShowLogin(change)} />
+
             <header className="jumbotron jumbotron-home my-4 mt-5">
                 <h1 className="display-3 text-center">
                     Encontre aqui empresas que irão ajudar você!
