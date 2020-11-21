@@ -1,0 +1,23 @@
+@import '../../assets/scss/colors.scss';
+
+
+.dashboard {
+    background-color: white;
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 100%;
+}
+
+.navbar-brand {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.bg-light {
+    background-color: $color_body !important;
+}
+
+.jumbotron {
+    background-color: $color_body !important;
+}
