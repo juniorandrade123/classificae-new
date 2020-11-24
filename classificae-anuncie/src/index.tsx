@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Dashboard from './page/dashboard/dashboard';
 import Register from './page/register/register';
+import FormCompany from './component/form-company/form-company';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -13,6 +14,7 @@ ReactDOM.render(
       <Route path="/login" exact={true} component={App} />
       <Route path="/home" exact={true} component={Dashboard} />
       <Route path="/register" exact={true} component={Register} />
+      <Route path="/form" exact={true} component={FormCompany} />
     </Switch>
   </BrowserRouter>,
   document.getElementById('root')
