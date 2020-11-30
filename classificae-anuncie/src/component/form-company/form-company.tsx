@@ -122,17 +122,17 @@ const FormCompany: React.FC = () => {
         if (singleImage)
             setLogo(pictures[0]);
         else {
-            if (company?.image_galeria.length === 0)
-                setGaleria(pictures)
+            if (galeria.length === 0) {
+                let list: any = [];
+                list.push({id: 0, base64: pictures[0]});
+                setGaleria(list);
+            }
             else {                
                 pictures.forEach((item: any) => {
                     let consulting = company?.image_galeria.filter(a => a.base64 === item);
                     if (consulting?.length === 0)
                         company?.image_galeria.push({id: 0, base64: item})
                 })
-
-                console.log(company?.image_galeria);
-
                 setGaleria(company?.image_galeria);
             }
         }
@@ -155,8 +155,10 @@ const FormCompany: React.FC = () => {
     }
 
     const deleteGaleria = (img: any) => {
-        let list = company?.image_galeria.filter(a => a.base64 !== img.base64);
-        setGaleria(list);
+        if (company !== null) {
+            company.image_galeria = company?.image_galeria.filter(a => a.base64 !== img.base64);
+            setGaleria(company.image_galeria);
+        }
     }
 
     const renderPage = () => {
