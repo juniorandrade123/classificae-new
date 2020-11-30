@@ -1,5 +1,4 @@
 export class CompanyModel {
-    _id: string = '';
     address: Address = new Address();
     contact: Contact = new Contact();
     description: string = '';
@@ -12,9 +11,11 @@ export class CompanyModel {
     name: string = '';
     segment: string = '';
     password: string = '';
+    id?: string;
 }
 
 export class ImageGaleria {
+    id: number = 0;
     base64: string = '';
 }
 
@@ -49,7 +50,7 @@ export class Payment {
 export class Redes {
     facebook: string = '';
     instagran: string = '';
-    twitter: string = '';
+    whats: string = '';
 }
 
 
