@@ -38,7 +38,7 @@ export class Contact {
 export class Information {
     payment: Payment = new Payment();
     redes: Redes = new Redes();
-    schedule: string[] = [];
+    schedule: Schedulue[] = [];
 }
 
 export class Payment {
@@ -51,6 +51,13 @@ export class Redes {
     facebook: string = '';
     instagran: string = '';
     whats: string = '';
+}
+
+export class Schedulue {
+    day_week_start: string = '';
+    day_week_end: string = '';
+    hour_start: string = '';
+    hour_end: string = '';
 }
 
 

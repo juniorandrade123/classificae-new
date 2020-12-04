@@ -48,7 +48,7 @@ const Dashboard: React.FC = () => {
                             <h1 className="display-4">Olá, {company?.name}</h1>
                             <hr className="my-4" />
                             <button onClick={() => config()} className="btn btn-primary btn-lg btn-classificae-primary">Configurar Anuncio</button>
-                            <a className="btn btn-primary btn-lg btn-classificae-primary ml-1" href="#" role="button">Ver Anuncio</a>
+                            {/* <a className="btn btn-primary btn-lg btn-classificae-primary ml-1" href="#" role="button">Ver Anuncio</a> */}
                         </div>
                     </div>
                 </div>
