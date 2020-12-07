@@ -42,3 +42,9 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+@media only screen and (max-width: 1024px) {
+  .sidebar-autentication {
+    width: 100%;
+  }
+}

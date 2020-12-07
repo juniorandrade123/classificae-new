@@ -73,6 +73,8 @@ const FormCompany: React.FC = () => {
                     
                     setGaleria(images_galeria);
                     setSchedule(node.data[0].information.schedule);
+
+                    forceUpdate();
                 })
                 .catch((err: any) => { console.error(err); setLoading(false); });
         }
@@ -312,6 +314,7 @@ const FormCompany: React.FC = () => {
                                         <button type="button" className="form-control btn-primary" onClick={() => createSchedule()}>Adicionar</button>
                                     </div>
                                     <div className="col-12 mt-2" style={{display: schedule.length === 0 ? 'none' : ''}}>
+                                            <div className="table-responsive">
                                             <table className="table">
                                                 <thead>
                                                     <tr>
@@ -338,6 +341,7 @@ const FormCompany: React.FC = () => {
                                                     }
                                                 </tbody>
                                             </table>
+                                            </div>
                                     </div>
                                 </div>
                                 </form>
@@ -348,15 +352,15 @@ const FormCompany: React.FC = () => {
                             </div>
                             <div className="col-4 mt-2">
                                 <label>Facebook</label>
-                                <input className="form-control" type="text" name="facebook" id="facebook" defaultValue={company?.information?.redes.facebook} />
+                                <input className="form-control" type="text" name="facebook" id="facebook" ref={register()} defaultValue={company?.information?.redes.facebook} />
                             </div>
                             <div className="col-4 mt-2">
                                 <label>Instagram</label>
-                                <input className="form-control" type="text" name="instagram" id="instagram" defaultValue={company?.information?.redes.instagran} />
+                                <input className="form-control" type="text" name="instagram" id="instagram" ref={register()} defaultValue={company?.information?.redes.instagran} />
                             </div>
                             <div className="col-4 mt-2">
                                 <label>Whatsapp</label>
-                                <input className="form-control" type="text" name="whats" id="whats" defaultValue={company?.information?.redes.whats} />
+                                <input className="form-control" type="text" name="whats" id="whats" ref={register()} defaultValue={company?.information?.redes.whats} />
                             </div>
                             <div className="col-12 mt-2">
                                 <label>Logo</label>
