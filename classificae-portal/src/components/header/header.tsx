@@ -73,11 +73,11 @@ const Header: React.FC<
                                             <i data-tip="Whatsapp" className="fa fa-whatsapp"></i>
                                         </a>
                                     </li>
-                                    <li className="nav-item active ml-auto">
+                                    {/* <li className="nav-item active ml-auto">
                                         <div className="nav-link navbar-icons">
                                             <i onClick={() => login(true)} data-tip="Entrar/Registrar" className="fa fa-user-circle-o" aria-hidden="true"></i>
                                         </div>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                         </div>
