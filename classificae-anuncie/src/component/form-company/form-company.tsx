@@ -64,7 +64,10 @@ const FormCompany: React.FC = () => {
                 .then((node: any) => {
                     setCompany(node.data[0]);
                     setLogo(node.data[0].image_logo);
-                    setLoading(false);       
+                        
+                    setCheckCredit(node.data[0].information.payment.credit);
+                    setCheckDebit(node.data[0].information.payment.debit);
+                    setCheckMoney(node.data[0].information.payment.money);
                     
                     let images_galeria:any[] = [];
                     Object.keys(node.data[0].image_galeria).map((item: any, i) => {
@@ -75,6 +78,7 @@ const FormCompany: React.FC = () => {
                     setSchedule(node.data[0].information.schedule);
 
                     forceUpdate();
+                    setLoading(false);   
                 })
                 .catch((err: any) => { console.error(err); setLoading(false); });
         }
@@ -108,8 +112,6 @@ const FormCompany: React.FC = () => {
                 dto.keywords = data.keywords;
             }
 
-            console.log(dto)
-
             createOrUpdate(dto);
         }
 
@@ -128,6 +130,7 @@ const FormCompany: React.FC = () => {
                 }
 
                 setLoading(false);
+                forceUpdate();
             })
             .catch((err: any) => { console.error(err); setLoading(false); });
     }
