@@ -11,7 +11,7 @@ import FormCompany from './component/form-company/form-company';
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/login" exact={true} component={App} />
+      <Route path="/" exact={true} component={App} />
       <Route path="/home" exact={true} component={Dashboard} />
       <Route path="/register" exact={true} component={Register} />
       <Route path="/form" exact={true} component={FormCompany} />
