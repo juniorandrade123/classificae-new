@@ -15,7 +15,11 @@ const App: React.FC = () => {
         sessionStorage.setItem('user-info', JSON.stringify(node.data));
         window.location.href = 'home';
     });
-}
+  }
+
+  const registerNew = () => {    
+    window.open('https://wa.me/message/PYKGLF2ELGGDG1', '_blank');
+  }
 
 const onSubmit = (data: any) => login(data);
 
@@ -45,9 +49,9 @@ const onSubmit = (data: any) => login(data);
                     <button type="submit" className="form-control btn-classificae-primary">Acessar</button>
                   </div>
                   <div className="col-12 p-0 mt-5 text-center">
-                    <label className="register-me">
+                    <label className="register-me" onClick={() => registerNew()}>
                       Anunciar
-                      </label>
+                    </label>
                   </div>
                 </div>
               </form>

@@ -1,5 +1,5 @@
 import './form-company.scss';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import api from '../../api';
 import companyModel from './model/company';
@@ -11,20 +11,29 @@ import { PuffLoader } from 'react-spinners';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const FormCompany: React.FC = () => {
+export function useForceUpdate() {
+    const [, setTick] = useState(0);
+    const update = useCallback(() => {
+      setTick(tick => tick + 1);
+    }, [])
+    return update;
+}
 
-    const { register, handleSubmit, watch, errors, setValue } = useForm();
+const FormCompany: React.FC = () => {
+    const forceUpdate = useForceUpdate();
+    const { register, handleSubmit, watch, errors, setValue, getValues } = useForm();
     const notifySuccess = (message: string) => toast.success(message);
     const notifyError = (message: string) => toast.error(message);
 
-    let [company, setCompany] = useState<companyModel | null>(null);
-    let [checkMoney, setCheckMoney] = useState<any | null>(false);
-    let [checkCredit, setCheckCredit] = useState<any | null>(false);
-    let [checkDebit, setCheckDebit] = useState<any | null>(false);
-    let [loading, setLoading] = useState<any | null>(false);    
+    const [company, setCompany] = useState<companyModel | null>(null);
+    const [checkMoney, setCheckMoney] = useState<any | null>(false);
+    const [checkCredit, setCheckCredit] = useState<any | null>(false);
+    const [checkDebit, setCheckDebit] = useState<any | null>(false);
+    const [loading, setLoading] = useState<any | null>(false);   
+    const [schedule, setSchedule] = useState<any | null>([]);
 
-    let [logo, setLogo] = useState('');
-    let [galeria, setGaleria] = useState<any | null>([]);
+    const [logo, setLogo] = useState('');
+    const [galeria, setGaleria] = useState<any | null>([]);
 
     const override = css`
         display: block;
@@ -63,6 +72,7 @@ const FormCompany: React.FC = () => {
                     });
                     
                     setGaleria(images_galeria);
+                    setSchedule(node.data[0].information.schedule);
                 })
                 .catch((err: any) => { console.error(err); setLoading(false); });
         }
@@ -77,11 +87,23 @@ const FormCompany: React.FC = () => {
             if (company !== null) {
                 dto = company;
                 dto.name = data.nome;     
+                dto.description_all = data.description_all;
+                dto.description = data.description;
+                dto.contact.cel = data.cel;
+                dto.contact.tel = data.tel;
+                dto.contact.email = data.email;
+                dto.address.map = data.maps;
+                dto.information.redes.facebook = data.facebook;
+                dto.information.redes.instagran = data.instagram;
+                dto.information.redes.whats = data.whats;
                 dto.id = idUser?.user?.id;
                 dto.information.payment.money = checkMoney;
                 dto.information.payment.credit = checkCredit;
                 dto.information.payment.debit = checkDebit;
                 dto.image_logo = logo;
+                dto.information.schedule = schedule;
+                dto.segment = data.segment;
+                dto.keywords = data.keywords;
             }
 
             console.log(dto)
@@ -161,6 +183,31 @@ const FormCompany: React.FC = () => {
         }
     }
 
+    const createSchedule = () => {
+        let valuesForm = getValues();
+        let listInsert: any = schedule;
+
+        listInsert.push({
+            day_week_start: valuesForm.day_week_start,
+            day_week_end: valuesForm.day_week_end,
+            hour_start: valuesForm.hour_start,
+            hour_end: valuesForm.hour_end,
+        });
+
+        setSchedule(listInsert);
+        forceUpdate();
+    }
+
+    const removeScheduling = (scheduling: any) => {
+        let listInsert: any = schedule;
+        const index = listInsert.indexOf(scheduling);
+        if (index > -1) {
+            listInsert.splice(index, 1);
+        }
+        setSchedule(listInsert);
+        forceUpdate();
+    }
+
     const renderPage = () => {
         return <div className="form-company">
             <ToastContainer />
@@ -180,8 +227,20 @@ const FormCompany: React.FC = () => {
                                 <input className="form-control" type="text" name="nome" id="nome" defaultValue={company?.name} ref={register({ required: true })} required />
                             </div>
                             <div className="col-12 mt-2">
+                                <label>Descrição breve</label>
+                                <textarea className="form-control" name="description" id="description" cols={30} rows={5} defaultValue={company?.description} ref={register({ required: true })} required></textarea>
+                            </div>
+                            <div className="col-12 mt-2">
                                 <label>Conheça</label>
-                                <textarea className="form-control" name="conheca" id="conheca" cols={30} rows={5} defaultValue={company?.description_all} ref={register({ required: true })} required></textarea>
+                                <textarea className="form-control" name="description_all" id="description_all" cols={30} rows={5} defaultValue={company?.description_all} ref={register({ required: true })} required></textarea>
+                            </div>
+                            <div className="col-12 mt-2">
+                                <label>Segmento</label>
+                                <input placeholder="Exemplo: Vestuários, Confecção" className="form-control" type="text" name="segment" id="segment" defaultValue={company?.segment} ref={register({ required: true })} required />
+                            </div>
+                            <div className="col-12 mt-2">
+                                <label>Palavras-Chave</label>
+                                <input placeholder="Exemplo: Carros, Motor" className="form-control" type="text" name="keywords" id="keywords" defaultValue={company?.keywords} ref={register({ required: true })} required />
                             </div>
                             <div className="col-4 mt-2">
                                 <label>Telefone</label>
@@ -216,42 +275,72 @@ const FormCompany: React.FC = () => {
                                 </div>
                             </div>
                             <div className="col-12 mt-2">
-                                <label>Horário de atendimento</label>
-                                <div className="row">
+                                <form className="needs-validation" onSubmit={handleSubmit(onSubmit)}>
+                                    <label>Horário de atendimento</label>
+                                    <div className="row">
                                     <div className="col-3">
-                                        <select className="form-control" name="dia" id="dia_inicial" defaultValue="" ref={register()}>
+                                        <select className="form-control" name="day_week_start" id="day_week_start" defaultValue="" ref={register()}>
                                             <option value="">Selecione o dia inicial</option>
-                                            <option value="segunda">Segunda-Feira</option>
-                                            <option value="terca">Terca-Feira</option>
+                                            <option value="Segunda-Feira">Segunda-Feira</option>
+                                            <option value="Terca-Feira">Terca-Feira</option>
                                             <option value="quarta">Quarta-Feira</option>
-                                            <option value="quinta">Quinta-Feira</option>
-                                            <option value="sexta">Sexta-Feira</option>
-                                            <option value="sabado">Sabado-Feira</option>
-                                            <option value="domingo">Domingo-Feira</option>
+                                            <option value="Quarta-Feira">Quinta-Feira</option>
+                                            <option value="Sexta-Feira">Sexta-Feira</option>
+                                            <option value="Sabado">Sabado</option>
+                                            <option value="Domingo">Domingo</option>
                                         </select>
                                     </div>
                                     <div className="col-3">
-                                        <select className="form-control" name="dia" id="dia_final" defaultValue="" ref={register()}>
+                                        <select className="form-control" name="day_week_end" id="day_week_end" defaultValue="" ref={register()}>
                                             <option value="">Selecione o dia final</option>
-                                            <option value="segunda">Segunda-Feira</option>
-                                            <option value="terca">Terca-Feira</option>
+                                            <option value="Segunda-Feira">Segunda-Feira</option>
+                                            <option value="Terca-Feira">Terca-Feira</option>
                                             <option value="quarta">Quarta-Feira</option>
-                                            <option value="quinta">Quinta-Feira</option>
-                                            <option value="sexta">Sexta-Feira</option>
-                                            <option value="sabado">Sábado</option>
-                                            <option value="domingo">Domingo</option>
+                                            <option value="Quarta-Feira">Quinta-Feira</option>
+                                            <option value="Sexta-Feira">Sexta-Feira</option>
+                                            <option value="Sabado">Sabado</option>
+                                            <option value="Domingo">Domingo</option>
                                         </select>
                                     </div>
                                     <div className="col-2">
-                                        <input placeholder="horario inicio" type="text" className="form-control" id="horario" name="horario" defaultValue="" ref={register()} />
+                                        <input placeholder="horario inicio" type="text" className="form-control" id="hour_start" name="hour_start" defaultValue="" ref={register()} />
                                     </div>
                                     <div className="col-2">
-                                        <input placeholder="horario final" type="text" className="form-control" id="horario" name="horario" defaultValue="" ref={register()} />
+                                        <input placeholder="horario final" type="text" className="form-control" id="hour_end" name="hour_end" defaultValue="" ref={register()} />
                                     </div>
                                     <div className="col-2">
-                                        <button type="button" className="form-control btn-primary">Adicionar</button>
+                                        <button type="button" className="form-control btn-primary" onClick={() => createSchedule()}>Adicionar</button>
+                                    </div>
+                                    <div className="col-12 mt-2" style={{display: schedule.length === 0 ? 'none' : ''}}>
+                                            <table className="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Dia incial</th>
+                                                        <th scope="col">Dia final</th>
+                                                        <th scope="col">Horario de abertura</th>
+                                                        <th scope="col">Horario de fechamento</th>
+                                                        <th scope="col">Ação</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        schedule.map((item: any, i: number) => (
+                                                            <tr key={i}>
+                                                                <td>{item.day_week_start}</td>
+                                                                <td>{item.day_week_end}</td>
+                                                                <td>{item.hour_start}</td>
+                                                                <td>{item.hour_end}</td>
+                                                                <td>
+                                                                    <button onClick={() => removeScheduling(item)} type="button" className="btn btn-danger col-12">Excluir</button>
+                                                                </td>
+                                                            </tr>
+                                                        ))
+                                                    }
+                                                </tbody>
+                                            </table>
                                     </div>
                                 </div>
+                                </form>
                             </div>
                             <div className="col-12 mt-2">
                                 <label>Google Maps</label>
