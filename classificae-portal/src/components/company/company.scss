@@ -1,11 +1,14 @@
 @import '../../assets/scss/colors.scss';
 
 
-.btn-view {
+.btn-actions {
     background-color: $color_tree;
     color: white;
-    font-weight: bold;
-    cursor: pointer;    
+    font-weight: bold;    
+}
+
+.btn-icons {
+  cursor: pointer;
 }
 
 .card-img-top {    

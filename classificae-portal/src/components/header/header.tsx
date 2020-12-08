@@ -73,11 +73,11 @@ const Header: React.FC<
                                             <i data-tip="Whatsapp" className="fa fa-whatsapp"></i>
                                         </a>
                                     </li>
-                                    {/* <li className="nav-item active ml-auto">
-                                        <div className="nav-link navbar-icons">
-                                            <i onClick={() => login(true)} data-tip="Entrar/Registrar" className="fa fa-user-circle-o" aria-hidden="true"></i>
-                                        </div>
-                                    </li> */}
+                                    <li className="nav-item active ml-auto" style={{display: window.location.pathname === '/view' ? 'none' : ''}}>
+                                        <a className="nav-link navbar-icons" href={'http://minhaconta.classificae.com.br'} target="blank">
+                                            <i data-tip="Minha Conta" className="fa fa-user-circle-o"></i>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
