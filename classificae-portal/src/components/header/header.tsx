@@ -15,9 +15,9 @@ const Header: React.FC<
         login: (change: boolean) => void,
     }> = ({
         title = null,
-        facebook = null,
-        instagram = null,
-        whatsapp = null,
+        facebook = '',
+        instagram = '',
+        whatsapp = '',
         login,
     }) => {
 
@@ -32,6 +32,51 @@ const Header: React.FC<
             }
 
         }, []);
+
+        const renderSocial = () => {
+            if (window.location.pathname === '/view') {
+                return <>
+                    <li className="nav-item active" style={{ display: facebook === '' ? 'none' : '' }}>
+                        <a className="nav-link navbar-icons" href={facebook} target="blank">
+                            <i data-tip="Facebook" className="fa fa-facebook"></i>
+                        </a>
+                    </li>
+                    <li className="nav-item active" style={{ display: instagram === '' ? 'none' : '' }}>
+                        <a className="nav-link navbar-icons" href={instagram} target="blank">
+                            <i data-tip="Instagram" className="fa fa-instagram"></i>
+                        </a>
+                    </li>
+                    <li className="nav-item active" style={{ display: whatsapp === '' ? 'none' : '' }}>
+                        <a className="nav-link navbar-icons" href={whatsapp} target="blank">
+                            <i data-tip="Whatsapp" className="fa fa-whatsapp"></i>
+                        </a>
+                    </li>
+                </>
+            } else {
+                return <>
+                    <li className="nav-item active">
+                        <a className="nav-link navbar-icons" href={facebook === '' ? 'https://www.facebook.com/classificae/' : facebook} target="blank">
+                            <i data-tip="Facebook" className="fa fa-facebook"></i>
+                        </a>
+                    </li>
+                    <li className="nav-item active">
+                        <a className="nav-link navbar-icons" href={instagram === '' ? 'https://www.instagram.com/classificae/' : instagram} target="blank">
+                            <i data-tip="Instagram" className="fa fa-instagram"></i>
+                        </a>
+                    </li>
+                    <li className="nav-item active">
+                        <a className="nav-link navbar-icons" href={whatsapp === '' ? 'https://wa.me/message/PYKGLF2ELGGDG1' : whatsapp} target="blank">
+                            <i data-tip="Whatsapp" className="fa fa-whatsapp"></i>
+                        </a>
+                    </li>
+                    <li className="nav-item active ml-auto" style={{ display: window.location.pathname === '/view' ? 'none' : '' }}>
+                        <a className="nav-link navbar-icons" href={'http://minhaconta.classificae.com.br'} target="blank">
+                            <i data-tip="Minha Conta" className="fa fa-user-circle-o"></i>
+                        </a>
+                    </li>
+                </>
+            }
+        }
 
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-header fixed-top">                
@@ -58,26 +103,7 @@ const Header: React.FC<
                         <div className={window.location.pathname === '/view' ? 'col-3 nav-icons' : 'col-6 nav-icons'}>
                             <div className="collapse navbar-collapse" id="navbarResponsive">
                                 <ul className="navbar-nav ml-auto">
-                                    <li className="nav-item active">
-                                        <a className="nav-link navbar-icons" href={facebook === null ? 'https://www.facebook.com/classificae/' : facebook} target="blank">
-                                            <i data-tip="Facebook" className="fa fa-facebook"></i>
-                                        </a>
-                                    </li>
-                                    <li className="nav-item active">
-                                        <a className="nav-link navbar-icons" href={instagram === null ? 'https://www.instagram.com/classificae/' : instagram} target="blank">
-                                            <i data-tip="Instagram" className="fa fa-instagram"></i>
-                                        </a>
-                                    </li>
-                                    <li className="nav-item active">
-                                        <a className="nav-link navbar-icons" href={whatsapp === null ? 'https://wa.me/message/PYKGLF2ELGGDG1' : whatsapp} target="blank">
-                                            <i data-tip="Whatsapp" className="fa fa-whatsapp"></i>
-                                        </a>
-                                    </li>
-                                    <li className="nav-item active ml-auto" style={{display: window.location.pathname === '/view' ? 'none' : ''}}>
-                                        <a className="nav-link navbar-icons" href={'http://minhaconta.classificae.com.br'} target="blank">
-                                            <i data-tip="Minha Conta" className="fa fa-user-circle-o"></i>
-                                        </a>
-                                    </li>
+                                   {renderSocial()}
                                 </ul>
                             </div>
                         </div>

@@ -53,6 +53,7 @@ const View: React.FC = () => {
                 <Header title={company['name']} 
                     facebook={company.information.redes.facebook} 
                     instagram={company.information.redes.instagran}
+                    whatsapp={company.information.redes.whats}
                     login={(change: boolean) => setShowLogin(change)} />
 
                 <Login showLogin={showLogin} changeLogin={(change: boolean) => setShowLogin(change)} />
