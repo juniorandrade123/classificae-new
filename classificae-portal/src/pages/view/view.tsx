@@ -26,7 +26,6 @@ const View: React.FC = () => {
             });
 
             convertJson.image_galeria = images;
-            convertJson.image_galeria.push({base64: convertJson.image_logo, id: 0});
             
             var sortedArray: string[] = convertJson.image_galeria.sort((n1: any,n2: any) => {
                 if (n1.id > n2.id) {

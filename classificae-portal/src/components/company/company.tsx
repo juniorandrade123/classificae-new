@@ -92,15 +92,9 @@ const Company: React.FC<{
                                 <p className="card-text">{item.description}</p>
                             </div>
                             <div className="card-footer btn-actions">
-                                <div className="row">
-                                    <div className="col-4 btn-icons">
-                                        <h3 data-tip="Curtir"><i title="Curtir" className="fa fa-thumbs-o-up" aria-hidden="true"></i></h3>
-                                    </div>
-                                    <div className="col-4 btn-icons">
-                                        <h3 data-tip="Compartilhar"><i title="Compartilhar" className="fa fa-share-alt" aria-hidden="true"></i></h3>
-                                    </div>
-                                    <div className="col-4 btn-icons" onClick={() => goToView(item)}>
-                                        <h3 data-tip="Visualizar"><i title="Visualizar" className="fa fa-eye" aria-hidden="true"></i></h3>
+                                <div className="row">                                   
+                                    <div className="col-12 btn-view" onClick={() => goToView(item)}>
+                                        <h5 data-tip="Visualizar" className="font-weight-bold">Visualizar</h5>
                                     </div>
                                 </div>                                
                             </div>
@@ -123,15 +117,9 @@ const Company: React.FC<{
                                 <p className="card-text">{item.description}</p>
                             </div>
                             <div className="card-footer btn-actions">
-                                <div className="row">
-                                    <div className="col-4 btn-icons">
-                                        <h3 data-tip="Curtir"><i title="Curtir" className="fa fa-thumbs-o-up" aria-hidden="true"></i></h3>
-                                    </div>
-                                    <div className="col-4 btn-icons">
-                                        <h3 data-tip="Compartilhar"><i title="Compartilhar" className="fa fa-share-alt" aria-hidden="true"></i></h3>
-                                    </div>
-                                    <div className="col-4 btn-icons" onClick={() => goToView(item)}>
-                                        <h3 data-tip="Visualizar"><i title="Visualizar" className="fa fa-eye" aria-hidden="true"></i></h3>
+                                <div className="row btn-view" onClick={() => goToView(item)}>                                   
+                                    <div className="col-12">
+                                        <h5 data-tip="Visualizar" className="font-weight-bold">Visualizar</h5>
                                     </div>
                                 </div>                                
                             </div>
