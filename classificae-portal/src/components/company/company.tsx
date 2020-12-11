@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import api from '../../api';
 import './company.scss';
 import ReactTooltip from 'react-tooltip';
+import Carousel from 'react-elastic-carousel';
 
 
 const Company: React.FC<{
@@ -65,6 +66,16 @@ const Company: React.FC<{
         </div>
     }
 
+    const isMobile = () => {
+        let mq = window.matchMedia( "(max-width: 1024px)" );
+        if (mq.matches) {
+            return 1;
+        }
+        else {
+           return 3
+        }
+    }
+
     return (
         <div className="row text-center">      
 
@@ -78,56 +89,63 @@ const Company: React.FC<{
                     {renderNotFound()}
                 </div>
 
-                <div className="col-12 mb-4 text-left" style={{display: listCompanys.length > 0 ? '' : 'none'}}>
+                <div className="col-12 mb-4 text-left title-div" style={{display: listCompanys.length > 0 ? '' : 'none'}}>
                     <h2 className="font-weight-bold">Empresas Patrocinadoras</h2>
                 </div>
 
-            {
-                listCompanys.map((item: any, i: number) => (
-                    <div className="col-lg-3 col-md-6 mb-4" key={i}>
-                        <div className="card h-100 card-company">
-                            <img className="card-img-top" src={item.image_logo} alt="" />
-                            <div className="card-body">
-                                <h5 className="card-title">{item.name}</h5>
-                                <p className="card-text">{item.description}</p>
-                            </div>
-                            <div className="card-footer btn-actions">
-                                <div className="row">                                   
-                                    <div className="col-12 btn-view" onClick={() => goToView(item)}>
-                                        <h5 data-tip="Visualizar" className="font-weight-bold">Visualizar</h5>
+                <div className="col-12" style={{display: listCompanysDraft.length === 0 ? 'none' : ''}}>
+                <Carousel itemsToScroll={isMobile()} itemsToShow={isMobile()} pagination={false}>
+                    {
+                        listCompanys.map((item: any, i: number) => (
+                            <div className="col-12 mb-4" key={i}>
+                                <div className="card h-100 card-company">
+                                    <img className="card-img-top" src={item.image_logo} alt="" />
+                                    <div className="card-body">
+                                        <h5 className="card-title">{item.name}</h5>
+                                        <p className="card-text">{item.description}</p>
                                     </div>
-                                </div>                                
+                                    <div className="card-footer btn-actions">
+                                        <div className="row btn-view" onClick={() => goToView(item)}>
+                                            <div className="col-12">
+                                                <h5 data-tip="Visualizar" className="font-weight-bold">Visualizar</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                ))
-            }
+                        ))
+                    }
+                </Carousel>
+            </div>
 
-                <div className="col-12 mb-4 text-left mt-3" style={{display: listCompanysDraft.length > 0 ? '' : 'none'}}>
+                <div className="col-12 mb-4 text-left mt-3 title-div" style={{display: listCompanysDraft.length > 0 ? '' : 'none'}}>
                     <h2 className="font-weight-bold">Empresas em Destaque</h2>
                 </div>
 
-                {
-                listCompanysDraft.map((item: any, i: number) => (
-                    <div className="col-lg-3 col-md-6 mb-4" key={i}>
-                        <div className="card h-100 card-company">
-                            <img className="card-img-top" src={item.image_logo} alt="" />
-                            <div className="card-body">
-                                <h5 className="card-title">{item.name}</h5>
-                                <p className="card-text">{item.description}</p>
-                            </div>
-                            <div className="card-footer btn-actions">
-                                <div className="row btn-view" onClick={() => goToView(item)}>                                   
-                                    <div className="col-12">
-                                        <h5 data-tip="Visualizar" className="font-weight-bold">Visualizar</h5>
+            <div className="col-12" style={{display: listCompanysDraft.length === 0 ? 'none' : ''}}>
+                <Carousel itemsToScroll={isMobile()} itemsToShow={isMobile()} pagination={false}>
+                    {
+                        listCompanysDraft.map((item: any, i: number) => (
+                            <div className="col-12 mb-4" key={i}>
+                                <div className="card h-100 card-company">
+                                    <img className="card-img-top" src={item.image_logo} alt="" />
+                                    <div className="card-body">
+                                        <h5 className="card-title">{item.name}</h5>
+                                        <p className="card-text">{item.description}</p>
                                     </div>
-                                </div>                                
+                                    <div className="card-footer btn-actions">
+                                        <div className="row btn-view" onClick={() => goToView(item)}>
+                                            <div className="col-12">
+                                                <h5 data-tip="Visualizar" className="font-weight-bold">Visualizar</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                ))
-            }
-
+                        ))
+                    }
+                </Carousel>
+            </div>
         </div>
                          
     );
