@@ -7,56 +7,39 @@ import 'react-awesome-slider/dist/styles.css';
 import './view.scss';
 import Header from '../../components/header/header';
 import Login from '../../components/login/login';
+import api from '../../api';
 
 const View: React.FC = () => {
 
     const [company, setCompany] = useState<any | null>(null);
     const [showLogin, setShowLogin] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const local = localStorage.getItem('company');
+        const id = localStorage.getItem('company');
         
-        if (local !== undefined && local !== null) {    
-            let convertJson = JSON.parse(local);                 
-
-            let images:any[] = [];
-            Object.keys(convertJson.image_galeria).map((item: any, i) => {
-                console.log(i);
-                images.push(convertJson.image_galeria[item]);
-            });
-
-            convertJson.image_galeria = images;
-            
-            var sortedArray: string[] = convertJson.image_galeria.sort((n1: any,n2: any) => {
-                if (n1.id > n2.id) {
-                    return 1;
-                }
-            
-                if (n1.id < n2.id) {
-                    return -1;
-                }
-            
-                return 0;
-            });
-
-            convertJson.image_galeria = sortedArray;
-
-            setCompany(convertJson);
+        if (id !== undefined && id !== null) {    
+            getCompany(id);
         }
 
     }, [])
 
+    const getCompany = (id: string) => { 
+        setLoading(true);
+        api.get('GetId/' + id)
+        .then((node: any) => {
+            setCompany(node.data[0]);
+            setLoading(false);
+        });
+    }
+
+    const renderLoading = () => {
+        return <div className="lds-ripple"><div></div><div></div></div>
+    }
+
     const renderPage = () => {
         if (company !== null && company !== undefined)
-            return <div>
-
-                <Header title={company['name']} 
-                    facebook={company.information.redes.facebook} 
-                    instagram={company.information.redes.instagran}
-                    whatsapp={company.information.redes.whats}
-                    login={(change: boolean) => setShowLogin(change)} />
-
-                <Login showLogin={showLogin} changeLogin={(change: boolean) => setShowLogin(change)} />
+            return <div>                
 
                 <div className="mt-5">
                 <ReactTooltip place={'bottom'} />
@@ -138,11 +121,22 @@ const View: React.FC = () => {
             </div>
             </div>;
     
-        return <div></div>    
+        return <div className="col-12 mb-5 mt-4 text-center" style={{ display: !loading ? 'none' : '' }}>
+            {renderLoading()}
+        </div>   
     }
 
-    return (                    
-            renderPage()        
+    return (
+        <div>
+            <Header title={company === null ? 'Carregando...' : company['name']}
+                facebook={company === null ? '' : company.information.redes.facebook}
+                instagram={company === null ? '' : company.information.redes.instagran}
+                whatsapp={company === null ? '' : company.information.redes.whats}
+                login={(change: boolean) => setShowLogin(change)} />
+
+            <Login showLogin={showLogin} changeLogin={(change: boolean) => setShowLogin(change)} />
+            {renderPage()}
+        </div>
     );
 };
 

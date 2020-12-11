@@ -50,7 +50,7 @@ const Company: React.FC<{
     }
 
     const goToView = (item: any) => {
-        localStorage.setItem('company', JSON.stringify(item));
+        localStorage.setItem('company', item);
         window.location.href = 'view';
     }
 
@@ -89,15 +89,13 @@ const Company: React.FC<{
                     {renderNotFound()}
                 </div>
 
-                <div className="col-12 mb-4 text-left title-div" style={{display: listCompanys.length > 0 ? '' : 'none'}}>
+                <div className="col-12 mb-4 text-left" style={{display: listCompanys.length > 0 ? '' : 'none'}}>
                     <h2 className="font-weight-bold">Empresas Patrocinadoras</h2>
                 </div>
 
-                <div className="col-12" style={{display: listCompanysDraft.length === 0 ? 'none' : ''}}>
-                <Carousel itemsToScroll={isMobile()} itemsToShow={isMobile()} pagination={false}>
                     {
                         listCompanys.map((item: any, i: number) => (
-                            <div className="col-12 mb-4" key={i}>
+                            <div className="col-lg-3 col-md-6 mb-4" key={i}>
                                 <div className="card h-100 card-company">
                                     <img className="card-img-top" src={item.image_logo} alt="" />
                                     <div className="card-body">
@@ -105,7 +103,7 @@ const Company: React.FC<{
                                         <p className="card-text">{item.description}</p>
                                     </div>
                                     <div className="card-footer btn-actions">
-                                        <div className="row btn-view" onClick={() => goToView(item)}>
+                                        <div className="row btn-view" onClick={() => goToView(item._id)}>
                                             <div className="col-12">
                                                 <h5 data-tip="Visualizar" className="font-weight-bold">Visualizar</h5>
                                             </div>
@@ -115,18 +113,14 @@ const Company: React.FC<{
                             </div>
                         ))
                     }
-                </Carousel>
-            </div>
 
-                <div className="col-12 mb-4 text-left mt-3 title-div" style={{display: listCompanysDraft.length > 0 ? '' : 'none'}}>
+                <div className="col-12 mb-4 text-left mt-3" style={{display: listCompanysDraft.length > 0 ? '' : 'none'}}>
                     <h2 className="font-weight-bold">Empresas em Destaque</h2>
                 </div>
 
-            <div className="col-12" style={{display: listCompanysDraft.length === 0 ? 'none' : ''}}>
-                <Carousel itemsToScroll={isMobile()} itemsToShow={isMobile()} pagination={false}>
                     {
                         listCompanysDraft.map((item: any, i: number) => (
-                            <div className="col-12 mb-4" key={i}>
+                            <div className="col-lg-3 col-md-6 mb-4" key={i}>
                                 <div className="card h-100 card-company">
                                     <img className="card-img-top" src={item.image_logo} alt="" />
                                     <div className="card-body">
@@ -134,7 +128,7 @@ const Company: React.FC<{
                                         <p className="card-text">{item.description}</p>
                                     </div>
                                     <div className="card-footer btn-actions">
-                                        <div className="row btn-view" onClick={() => goToView(item)}>
+                                        <div className="row btn-view" onClick={() => goToView(item._id)}>
                                             <div className="col-12">
                                                 <h5 data-tip="Visualizar" className="font-weight-bold">Visualizar</h5>
                                             </div>
@@ -144,9 +138,7 @@ const Company: React.FC<{
                             </div>
                         ))
                     }
-                </Carousel>
             </div>
-        </div>
                          
     );
 };
