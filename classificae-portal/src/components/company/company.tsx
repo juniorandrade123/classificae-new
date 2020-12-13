@@ -1,51 +1,66 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import api from '../../api';
 import './company.scss';
 import ReactTooltip from 'react-tooltip';
 import Carousel from 'react-elastic-carousel';
 
+export function useForceUpdate() {
+    const [, setTick] = useState(0);
+    const update = useCallback(() => {
+      setTick(tick => tick + 1);
+    }, [])
+    return update;
+}
 
 const Company: React.FC<{
     search: string
 }> = ({search}) => {
 
+    const forceUpdate = useForceUpdate();
     const [listCompanys, setListCompanys] = useState([]);
     const [listCompanysDraft, setListCompanysDraft] = useState([]);
+    const [loadingGold, setLoadingGold] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {        
-        getCompany('listGoldCompanys');
-        getCompany('listCompanys');
+    useEffect(() => {   
+        getCompanyGold(); 
+        getCompany();    
     }, [search]);
 
-    const getCompany = (url: string) => {
-        setLoading(true);
+    const getCompanyGold = () => {
+        setLoadingGold(true);
         setListCompanys([]);
-        setListCompanysDraft([]);
-        api.get(url)
+        api.get('listGoldCompanys')
+        .then(async (node: any) => {            
+            if (search !== '') {     
+                setListCompanys(node.data.company.filter((a: any) => a.name.toUpperCase().includes(search.toUpperCase())
+                    || a.description.toUpperCase().includes(search.toUpperCase())
+                    || a.keywords.toUpperCase().includes(search.toUpperCase())
+                    || a.segment.toUpperCase().includes(search.toUpperCase())));
+            } else {
+                setListCompanys(node.data.company);
+            }  
+            
+            setLoadingGold(false);
+        });
+    }
+
+    const getCompany = () => {     
+        setLoading(true);        
+        api.get('listCompanys')
         .then((node: any) => {
             
             if (search !== '') {     
-                if (url === 'listGoldCompanys') {   
-                    setListCompanys(node.data.company.filter((a: any) => a.name.toUpperCase().includes(search.toUpperCase())
-                    || a.description.toUpperCase().includes(search.toUpperCase())
-                    || a.keywords.toUpperCase().includes(search.toUpperCase())
-                    || a.segment.toUpperCase().includes(search.toUpperCase())));
-                } else {
-                    setListCompanysDraft(node.data.company.filter((a: any) => a.name.toUpperCase().includes(search.toUpperCase())
-                    || a.description.toUpperCase().includes(search.toUpperCase())
-                    || a.keywords.toUpperCase().includes(search.toUpperCase())
-                    || a.segment.toUpperCase().includes(search.toUpperCase())));
-                }
+                setListCompanysDraft(node.data.company.filter((a: any) => a.name.toUpperCase().includes(search.toUpperCase())
+                || a.description.toUpperCase().includes(search.toUpperCase())
+                || a.keywords.toUpperCase().includes(search.toUpperCase())
+                || a.segment.toUpperCase().includes(search.toUpperCase())));
             } else {
-                if (url === 'listGoldCompanys') {
-                    setListCompanys(node.data.company);
-                } else {
-                    setListCompanysDraft(node.data.company);
-                }
+                setListCompanysDraft(node.data.company);
             }
 
             setLoading(false);
+            forceUpdate();
         });
     }
 
@@ -79,18 +94,18 @@ const Company: React.FC<{
     return (
         <div className="row text-center">      
 
-                <ReactTooltip place={'top'} />    
-
-                <div className="col-12 mb-5 mt-4" style={{ display: !loading ? 'none' : '' }}>
-                    {renderLoading()}
-                </div>
+                <ReactTooltip place={'top'} />                   
 
                 <div className="col-12 mb-5 mt-4" style={{ display: !loading && listCompanys.length === 0 && listCompanysDraft.length === 0 ? '' : 'none' }}>
                     {renderNotFound()}
                 </div>
 
-                <div className="col-12 mb-4 text-left" style={{display: listCompanys.length > 0 ? '' : 'none'}}>
+                <div className="col-12 mb-4 text-left" style={{display: listCompanys.length === 0 && !loadingGold ? 'none' : ''}}>
                     <h2 className="font-weight-bold">Empresas Patrocinadoras</h2>
+                </div>
+
+                <div className="col-12 mb-5 mt-4" style={{ display: !loadingGold ? 'none' : '' }}>
+                    {renderLoading()}
                 </div>
 
                     {
@@ -114,8 +129,12 @@ const Company: React.FC<{
                         ))
                     }
 
-                <div className="col-12 mb-4 text-left mt-3" style={{display: listCompanysDraft.length > 0 ? '' : 'none'}}>
+                <div className="col-12 mb-4 text-left mt-3" style={{display: listCompanysDraft.length === 0 && !loading ? 'none' : ''}}>
                     <h2 className="font-weight-bold">Empresas em Destaque</h2>
+                </div>
+
+                <div className="col-12 mb-5 mt-4" style={{ display: !loading ? 'none' : '' }}>
+                    {renderLoading()}
                 </div>
 
                     {
