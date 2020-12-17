@@ -16,7 +16,7 @@ const View: React.FC = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const id = localStorage.getItem('company');
+        const id = localStorage.getItem('id-company');
         
         if (id !== undefined && id !== null) {    
             getCompany(id);
