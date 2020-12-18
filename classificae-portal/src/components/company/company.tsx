@@ -91,7 +91,7 @@ const Company: React.FC<{
 
     const goToView = (item: any) => {
         localStorage.setItem('id-company', item);
-        window.location.href = 'view';
+        window.location.href = 'view/' + item;
     }
 
     const renderLoading = () => {
@@ -191,6 +191,15 @@ const Company: React.FC<{
         return icon;
     }
 
+    const sharedFacebook = (id: string) => {
+        let url =  window.location.href + 'view/' + id;
+        let facebookWindow = window.open('https://www.facebook.com/sharer.php?u=' + url, 'facebook-popup', 'height=350,width=600');
+        if (facebookWindow !== null) {
+            if (facebookWindow.focus) { facebookWindow.focus(); }
+            return false;
+        }
+    }    
+
     return (
         <div className="row text-center">      
 
@@ -226,7 +235,9 @@ const Company: React.FC<{
                                                     {renderIconsLike(item._id, item['user_like'])}
                                                 </div>
                                                 <div className="col-4 btn-icons">
-                                                    {/* <h3 data-tip="Compartilhar"><i title="Compartilhar" className="fa fa-share-alt" aria-hidden="true"></i></h3> */}
+                                                    <h3 onClick={() => sharedFacebook(item._id)} data-tip="Compartilhar">                                                        
+                                                            <i title="Compartilhar" className="fa fa-share-alt" aria-hidden="true"></i>                                                        
+                                                    </h3>
                                                 </div>
                                                 <div className="col-4 btn-icons" onClick={() => goToView(item._id)}>
                                                     <h3 data-tip="Visualizar"><i title="Visualizar" className="fa fa-eye" aria-hidden="true"></i></h3>
@@ -258,7 +269,9 @@ const Company: React.FC<{
                                                     {renderIconsLike(item._id, item['user_like'])}
                                                 </div>
                                                 <div className="col-4 btn-icons">
-                                                    <h3 data-tip="Compartilhar"><i title="Compartilhar" className="fa fa-share-alt" aria-hidden="true"></i></h3>
+                                                    <h3 onClick={() => sharedFacebook(item._id)} data-tip="Compartilhar">                                                        
+                                                        <i title="Compartilhar" className="fa fa-share-alt" aria-hidden="true"></i>                                                        
+                                                    </h3>
                                                 </div>
                                                 <div className="col-4 btn-icons" onClick={() => goToView(item._id)}>
                                                     <h3 data-tip="Visualizar"><i title="Visualizar" className="fa fa-eye" aria-hidden="true"></i></h3>

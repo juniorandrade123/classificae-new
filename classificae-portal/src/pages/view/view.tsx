@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, constructor} from 'react';
 import ReactTooltip from 'react-tooltip';
 
 import AwesomeSlider from 'react-awesome-slider';
@@ -9,14 +9,20 @@ import Header from '../../components/header/header';
 import Login from '../../components/login/login';
 import api from '../../api';
 
+import {    
+    match,
+    useParams
+  } from "react-router-dom";
+
 const View: React.FC = () => {
 
     const [company, setCompany] = useState<any | null>(null);
     const [showLogin, setShowLogin] = useState(false);
     const [loading, setLoading] = useState(false);
 
+
     useEffect(() => {
-        const id = localStorage.getItem('id-company');
+        const id = window.location.pathname.substring(6);
         
         if (id !== undefined && id !== null) {    
             getCompany(id);
