@@ -98,7 +98,7 @@ const FormCompany: React.FC = () => {
                 dto.contact.cel = data.cel;
                 dto.contact.tel = data.tel;
                 dto.contact.email = data.email;
-                dto.address.map = data.maps;
+                dto.address.description = data.address;
                 dto.information.redes.facebook = data.facebook;
                 dto.information.redes.instagran = data.instagram;
                 dto.information.redes.whats = data.whats;
@@ -110,6 +110,7 @@ const FormCompany: React.FC = () => {
                 dto.information.schedule = schedule;
                 dto.segment = data.segment;
                 dto.keywords = data.keywords;
+                dto.address.map =  dto.address.map;
             }
 
             createOrUpdate(dto);
@@ -260,6 +261,10 @@ const FormCompany: React.FC = () => {
                                 <input type="email" className="form-control" name="email" id="email" defaultValue={company?.contact?.email} ref={register({ required: true })} required />
                             </div>
                             <div className="col-12 mt-2">
+                                <label>Endereço: </label>
+                                <input type="text" className="form-control" name="address" id="address" defaultValue={company?.address?.description} ref={register({ required: true })} required />
+                            </div>
+                            <div className="col-12 mt-2">
                                 <label>Formas de pagamento</label>
                                 <div className="row m-auto pl-1">
                                     <div className="col-2">
@@ -349,10 +354,10 @@ const FormCompany: React.FC = () => {
                                 </div>
                                 </form>
                             </div>
-                            <div className="col-12 mt-2">
+                            {/* <div className="col-12 mt-2">
                                 <label>Google Maps</label>
                                 <textarea className="form-control" name="maps" id="maps" cols={30} rows={5} defaultValue={company?.address?.map} ref={register({ required: true })} required></textarea>
-                            </div>
+                            </div> */}
                             <div className="col-4 mt-2">
                                 <label>Facebook</label>
                                 <input className="form-control" type="text" name="facebook" id="facebook" ref={register()} defaultValue={company?.information?.redes.facebook} />
