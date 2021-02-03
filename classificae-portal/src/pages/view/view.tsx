@@ -73,10 +73,10 @@ const View: React.FC = () => {
                                 <h3 className="card-title">Contato</h3>
                                 <p className="card-text">
                                     <span style={{display: company.contact.tel !== '' ? '' : 'none'}}>
-                                        <b>Telefone:</b> {'(' + company.contact.tel.substr(0, 2) + ') ' + company.contact.tel.substr(2, 4) + '-' + company.contact.tel.substr(6,4)}<br></br>
+                                        <b>Telefone:</b> {'(' + company.contact.tel.substr(0, 2) + ') ' + company.contact.tel.substr(2)}<br></br>
                                     </span>
                                     <span style={{display: company.contact.cel !== '' ? '' : 'none'}}>
-                                        <b>Celular:</b> {'(' + company.contact.cel.substr(0, 2) + ') ' + company.contact.cel.substr(2, 5) + '-' + company.contact.cel.substr(6,4)}<br></br>
+                                        <b>Celular:</b> {'(' + company.contact.cel.substr(0, 2) + ') ' + company.contact.cel.substr(2)}<br></br>
                                     </span>
                                     <span style={{display: company.contact.email !== '' ? '' : 'none'}}>
                                         <b>E-mail:</b> {company?.contact?.email === '' ? 'contato@classificae.com.br' : company?.contact?.email}
